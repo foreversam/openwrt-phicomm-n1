@@ -72,8 +72,9 @@ jobs:
       - name: Build firmware
         run: |
           cp ./openwrt/bin/targets/*/*/*.tar.gz ./mknop/openwrt/
-          sudo ./mknop/gen_openwrt -d -k latest -m phicomm-n1
-          cd ./mknop/out/phicomm-n1/
+          cd ./mknop/
+          sudo ./gen_openwrt -d -k latest -m phicomm-n1
+          cd ./out/phicomm-n1/
           gzip *.img
           artifact_name="openwrt-phicomm-n1-$(date -I)"
           echo "ARTIFACT_NAME=$artifact_name" >> $GITHUB_ENV
