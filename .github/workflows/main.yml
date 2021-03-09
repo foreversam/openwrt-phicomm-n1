@@ -74,13 +74,14 @@ jobs:
           cp ./openwrt/bin/targets/*/*/*.tar.gz ./mknop/openwrt/
           cd ./mknop/
           sudo ./gen_openwrt -d -k latest -m phicomm-n1
-          cd ./out/phicomm-n1/
-          gzip *.img
-          artifact_name="openwrt-phicomm-n1-$(date -I)"
-          echo "ARTIFACT_NAME=$artifact_name" >> $GITHUB_ENV
+
+      - name: Prepare for uploading firmware
+        run: |
+          echo "ARTIFACT_NAME=openwrt-phicomm-n1-$(date -I)" >> $GITHUB_ENV
+          cp ./openwrt/.config ./mknop/out/phicomm-n1/
 
       - name: Upload firmware
         uses: actions/upload-artifact@main
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ./mknop/out/phicomm-n1
+          path: ./mknop/out/phicomm-n1/
