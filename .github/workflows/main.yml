@@ -81,6 +81,8 @@ jobs:
         run: |
           echo "ARTIFACT_NAME=openwrt-phicomm-n1-$(date -I)" >> $GITHUB_ENV
           cp ./openwrt/.config ./mknop/out/phicomm-n1/
+          cd ./mknop/out/phicomm-n1/
+          openssl dgst -sha256 ./*
 
       - name: Upload firmware
         uses: actions/upload-artifact@main
