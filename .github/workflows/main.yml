@@ -43,6 +43,9 @@ jobs:
       - name: Update and install feeds
         run: cd ./openwrt/ && ./scripts/feeds update -a && ./scripts/feeds install -a
 
+      - name: Install install-program
+        run: git clone --depth 1 https://github.com/tuanqing/install-program.git ./openwrt/package/install-program
+
       - name: Load config
         run: |
           [ -e ./.config ] && cp ./.config ./openwrt/
@@ -69,7 +72,7 @@ jobs:
           cd ./openwrt/
           make -j$(nproc) || make -j1 || make -j1 V=s
 
-      - name: Build firmware
+      - name: Build image
         run: |
           cp ./openwrt/bin/targets/*/*/*.tar.gz ./mknop/openwrt/
           cd ./mknop/
@@ -77,14 +80,14 @@ jobs:
           du -h ./out/phicomm-n1/*.img
           gzip ./out/phicomm-n1/*.img
 
-      - name: Prepare for uploading firmware
+      - name: Prepare for uploading artifact
         run: |
           echo "ARTIFACT_NAME=openwrt-phicomm-n1-$(date -I)" >> $GITHUB_ENV
           cp ./openwrt/.config ./mknop/out/phicomm-n1/
           cd ./mknop/out/phicomm-n1/
           openssl dgst -sha256 ./*
 
-      - name: Upload firmware
+      - name: Upload artifact
         uses: actions/upload-artifact@main
         with:
           name: ${{ env.ARTIFACT_NAME }}
