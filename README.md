@@ -1,5 +1,7 @@
 # openwrt-phicomm-n1
 
+[![Build OpenWrt](https://github.com/foreversam/openwrt-phicomm-n1/actions/workflows/main.yml/badge.svg)](https://github.com/foreversam/openwrt-phicomm-n1/actions/workflows/main.yml)
+
 Build OpenWrt for Phicomm N1 using GitHub Actions
 
 ## Thanks
