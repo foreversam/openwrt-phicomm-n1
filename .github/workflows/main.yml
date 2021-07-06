@@ -30,14 +30,18 @@ jobs:
 
       - name: Copy feeds.conf.default
         run: |
-          [ -f ./feeds.conf.default ] && cp ./feeds.conf.default ./openwrt/
+          if [ -f ./feeds.conf.default ]; then
+            cp ./feeds.conf.default ./openwrt/
+          fi
 
       - name: Update and install feeds
         run: cd ./openwrt/ && ./scripts/feeds update -a && ./scripts/feeds install -a
 
       - name: Copy .config
         run: |
-          [ -f ./.config ] && cp ./.config ./openwrt/
+          if [ -f ./.config ]; then
+            cp ./.config ./openwrt/
+          fi
 
       - name: Run custom.sh
         run: |
